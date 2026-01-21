@@ -39,6 +39,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Register = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        LogIn = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         maindesktop = new javax.swing.JDesktopPane();
@@ -116,7 +118,42 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        navar.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 120, 50));
+        navar.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 120, 50));
+
+        LogIn.setBackground(new java.awt.Color(102, 204, 255));
+        LogIn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogInMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogInMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogInMouseExited(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("LOG IN");
+
+        javax.swing.GroupLayout LogInLayout = new javax.swing.GroupLayout(LogIn);
+        LogIn.setLayout(LogInLayout);
+        LogInLayout.setHorizontalGroup(
+            LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LogInLayout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
+        );
+        LogInLayout.setVerticalGroup(
+            LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogInLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        navar.add(LogIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 120, 50));
 
         jPanel1.add(navar);
         navar.setBounds(0, 0, 120, 330);
@@ -196,6 +233,19 @@ public class Dashboard extends javax.swing.JFrame {
         maindesktop.add(up).setVisible(true);
     }//GEN-LAST:event_RegisterMouseClicked
 
+    private void LogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseClicked
+        login up = new login();
+        maindesktop.add(up).setVisible(true);
+    }//GEN-LAST:event_LogInMouseClicked
+
+    private void LogInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseExited
+        LogIn.setBackground(navcolor);
+    }//GEN-LAST:event_LogInMouseExited
+
+    private void LogInMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseEntered
+        LogIn.setBackground(bodycolor);
+    }//GEN-LAST:event_LogInMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -232,12 +282,14 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel LogIn;
     private javax.swing.JPanel Register;
     private javax.swing.JPanel dashpane;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel navar;
