@@ -118,7 +118,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        navar.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 120, 50));
+        navar.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 120, 50));
 
         LogIn.setBackground(new java.awt.Color(102, 204, 255));
         LogIn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -153,7 +153,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        navar.add(LogIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 120, 50));
+        navar.add(LogIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 120, 50));
 
         jPanel1.add(navar);
         navar.setBounds(0, 0, 120, 330);
@@ -234,8 +234,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_RegisterMouseClicked
 
     private void LogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseClicked
-        login up = new login();
-        maindesktop.add(up).setVisible(true);
+        loginPage log = new loginPage();
+        maindesktop.add(log).setVisible(true);
     }//GEN-LAST:event_LogInMouseClicked
 
     private void LogInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseExited
