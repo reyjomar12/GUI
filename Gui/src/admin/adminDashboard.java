@@ -46,6 +46,7 @@ public class adminDashboard extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         navar.setBackground(new java.awt.Color(49, 0, 71));
+        navar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Home.setBackground(new java.awt.Color(51, 0, 51));
         Home.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -77,6 +78,8 @@ public class adminDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addContainerGap())
         );
+
+        navar.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 21, -1, 40));
 
         Users.setBackground(new java.awt.Color(51, 0, 51));
         Users.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,26 +117,7 @@ public class adminDashboard extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout navarLayout = new javax.swing.GroupLayout(navar);
-        navar.setLayout(navarLayout);
-        navarLayout.setHorizontalGroup(
-            navarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(navarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(navarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Users, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Home, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        navarLayout.setVerticalGroup(
-            navarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(navarLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(Home, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
-        );
+        navar.add(Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 79, -1, -1));
 
         jPanel1.add(navar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 130, 320));
 
