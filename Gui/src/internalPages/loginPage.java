@@ -6,8 +6,12 @@
 package internalPages;
 
 import admin.adminDashboard;
+import admin.usersForm;
 import config.config;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import config.Session;
 
 /**
  *
@@ -132,17 +136,46 @@ public class loginPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        config cn = new config();
-        String sql = "SELECT * FROM tbl_accounts WHERE email = ? AND password = ? AND status = ?";
-        if(cn.authenticate(sql, email.getText(), password.getText(), "Active")){
-            JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
+       if (email.getText().isEmpty() || password.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter your email and password!");
+        return;
+    }
 
-            adminDashboard ad = new adminDashboard();
-            ad.setVisible(true);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null,"INVALID CREDENTIAL" );
+    config cn = new config();
+    String sql = "SELECT * FROM tbl_accounts WHERE email = ? AND password = ?";
+    
+    try (ResultSet rs = cn.getData(sql, email.getText(), password.getText())) {
+        if (rs.next()) {
+            // 2. Check Account Status
+            String status = rs.getString("status");
+            
+            if (!status.equalsIgnoreCase("Active")) {
+                JOptionPane.showMessageDialog(null, "Account is " + status + ". Please contact the Admin.");
+            } else {
+                // 3. Populate Session and Redirect
+                Session ses = Session.getInstance();
+                ses.setId(rs.getInt("a_id"));
+                ses.setName(rs.getString("name"));
+                ses.setEmail(rs.getString("email"));
+                ses.setType(rs.getString("type"));
+
+                JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
+                
+                if (ses.getType().equalsIgnoreCase("Admin")) {
+                    new adminDashboard().setVisible(true);
+                } else {
+                    new usersForm().setVisible(true);
+                }
+                this.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid Email or Password!");
         }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

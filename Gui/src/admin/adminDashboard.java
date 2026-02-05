@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package admin;
+import config.config;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -17,7 +21,20 @@ public class adminDashboard extends javax.swing.JFrame {
      */
     public adminDashboard() {
         initComponents();
+        jScrollPane1.setVisible(false);
+        
     }
+    public void displayData() {
+        try {
+        config cn = new config();
+        ResultSet rs = cn.getData("SELECT a_id, name, email, type, status FROM tbl_accounts");
+        user_table.setModel(DbUtils.resultSetToTableModel(rs));
+    } catch (Exception e) { // Changed from SQLException to Exception
+        System.out.println("Database Error: " + e.getMessage());
+    }
+
+    }
+
 
     Color navcolor= new Color(49,0,71);
     Color headcolor= new Color(153,0,255);
@@ -32,6 +49,8 @@ public class adminDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        user_table = new javax.swing.JTable();
         navar = new javax.swing.JPanel();
         Home = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -45,11 +64,29 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        user_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(user_table);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 420));
+
         navar.setBackground(new java.awt.Color(49, 0, 71));
         navar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Home.setBackground(new java.awt.Color(51, 0, 51));
         Home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 HomeMouseExited(evt);
             }
@@ -83,6 +120,9 @@ public class adminDashboard extends javax.swing.JFrame {
 
         Users.setBackground(new java.awt.Color(51, 0, 51));
         Users.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UsersMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 UsersMouseExited(evt);
             }
@@ -163,6 +203,15 @@ public class adminDashboard extends javax.swing.JFrame {
         Users.setBackground(navcolor);
     }//GEN-LAST:event_UsersMouseExited
 
+    private void UsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseClicked
+       displayData(); 
+       jScrollPane1.setVisible(true);
+    }//GEN-LAST:event_UsersMouseClicked
+
+    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
+        jScrollPane1.setVisible(false);
+    }//GEN-LAST:event_HomeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -207,6 +256,8 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel navar;
+    private javax.swing.JTable user_table;
     // End of variables declaration//GEN-END:variables
 }

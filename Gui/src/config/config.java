@@ -79,4 +79,52 @@ public boolean authenticate(String sql, Object... values) {
     }
     return false;
 }
+public String getAccountRole(String sql, Object... values) {
+    try (Connection conn = connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                // This retrieves the 'account_type' column value from your database
+                return rs.getString("account_type");
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Role Retrieval Error: " + e.getMessage());
+    }
+    return "failed";
+}
+public String getAccountType(String sql, Object... values) {
+    try (Connection conn = connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString("type"); // Ensure your DB column is named "type"
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching type: " + e.getMessage());
+    }
+    return null;
+}
+public ResultSet getData(String sql, Object... values) {
+    try {
+        Connection conn = connectDB();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+        return pstmt.executeQuery();
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+        return null;
+    }
+}
 }

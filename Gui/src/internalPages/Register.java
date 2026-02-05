@@ -7,6 +7,8 @@ package internalPages;
 
 import config.config;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 
@@ -165,10 +167,29 @@ public class Register extends javax.swing.JInternalFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         config con = new config();
-        String sql = "INSERT INTO tbl_accounts (name, email, password, type, status) VALUES (?, ?, ?, ?, ?)";
-        con.addRecord(sql, name.getText(), email.getText(), password.getText(), "Admin", "Pending");
-        
-        JOptionPane.showMessageDialog(null, "Record Added");
+    
+    // 1. Check for empty fields
+    if (name.getText().isEmpty() || email.getText().isEmpty() || password.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields are required!");
+    } else {
+        try {
+            // 2. Validate if Email already exists
+            String checkEmail = "SELECT * FROM tbl_accounts WHERE email = ?";
+            ResultSet rs = con.getData(checkEmail, email.getText());
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Email already exists!");
+            } else {
+                // 3. Proceed with Registration if unique
+                String sql = "INSERT INTO tbl_accounts (name, email, password, type, status) VALUES (?, ?, ?, ?, ?)";
+                con.addRecord(sql, name.getText(), email.getText(), password.getText(), "Admin", "Pending");
+                JOptionPane.showMessageDialog(null, "Record Added");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
     }//GEN-LAST:event_jButton1MouseClicked
 
 
