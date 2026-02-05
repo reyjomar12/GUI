@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package admin;
+import config.Session;
 import config.config;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -21,6 +22,7 @@ public class adminDashboard extends javax.swing.JFrame {
      */
     public adminDashboard() {
         initComponents();
+        profile.setVisible(false); 
         jScrollPane1.setVisible(false);
         
     }
@@ -49,6 +51,15 @@ public class adminDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        profile = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lbl_id = new javax.swing.JLabel();
+        lbl_name = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        lbl_email = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         user_table = new javax.swing.JTable();
         navar = new javax.swing.JPanel();
@@ -56,6 +67,8 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         Users = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        Account = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -63,6 +76,48 @@ public class adminDashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        profile.setBackground(new java.awt.Color(0, 153, 51));
+        profile.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setBackground(new java.awt.Color(0, 102, 153));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("ACCOUNT SETTINGS");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        profile.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel7.setText("ADMIN ID:");
+        profile.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 80, 30));
+        profile.add(lbl_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 140, 30));
+        profile.add(lbl_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 140, 30));
+
+        jLabel10.setText("ADMIN NAME:");
+        profile.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 80, 30));
+
+        jLabel11.setText("ADMIN EMAIL:");
+        profile.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 80, 30));
+        profile.add(lbl_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 140, 30));
+
+        jPanel1.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 420, 450));
 
         user_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,7 +132,7 @@ public class adminDashboard extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(user_table);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 420));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 420, 450));
 
         navar.setBackground(new java.awt.Color(49, 0, 71));
         navar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -159,15 +214,56 @@ public class adminDashboard extends javax.swing.JFrame {
 
         navar.add(Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 79, -1, -1));
 
+        Account.setBackground(new java.awt.Color(51, 0, 51));
+        Account.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccountMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AccountMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AccountMouseEntered(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("ACCOUNT");
+
+        javax.swing.GroupLayout AccountLayout = new javax.swing.GroupLayout(Account);
+        Account.setLayout(AccountLayout);
+        AccountLayout.setHorizontalGroup(
+            AccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+        );
+        AccountLayout.setVerticalGroup(
+            AccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AccountLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        navar.add(Account, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 110, 40));
+
         jPanel1.add(navar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 130, 320));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 255, 0));
         jLabel3.setText("ADMINISTRATOR");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 140, 30));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel3MouseEntered(evt);
+            }
+        });
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 100, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/admin.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, 90));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 90, 90));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Background.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -206,11 +302,47 @@ public class adminDashboard extends javax.swing.JFrame {
     private void UsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseClicked
        displayData(); 
        jScrollPane1.setVisible(true);
+       profile.setVisible(false); 
     }//GEN-LAST:event_UsersMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
         jScrollPane1.setVisible(false);
+        profile.setVisible(false); 
     }//GEN-LAST:event_HomeMouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        jScrollPane1.setVisible(false); 
+    profile.setVisible(true);       
+    
+    // Fetch data from Session
+    Session ses = Session.getInstance();
+    lbl_name.setText(ses.getName());
+    lbl_email.setText(ses.getEmail());
+    lbl_id.setText(" " + ses.getId());
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
+        jLabel3.setBackground(bodycolor);
+    }//GEN-LAST:event_jLabel3MouseEntered
+
+    private void AccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountMouseEntered
+        Account.setBackground(bodycolor);
+    }//GEN-LAST:event_AccountMouseEntered
+
+    private void AccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountMouseExited
+        Account.setBackground(navcolor);
+    }//GEN-LAST:event_AccountMouseExited
+
+    private void AccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountMouseClicked
+        jScrollPane1.setVisible(false); 
+    profile.setVisible(true);       
+    
+    // Fetch data from Session
+    Session ses = Session.getInstance();
+    lbl_name.setText(ses.getName());
+    lbl_email.setText(ses.getEmail());
+    lbl_id.setText(" " + ses.getId());
+    }//GEN-LAST:event_AccountMouseClicked
 
     /**
      * @param args the command line arguments
@@ -248,16 +380,27 @@ public class adminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Account;
     private javax.swing.JPanel Home;
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_email;
+    private javax.swing.JLabel lbl_id;
+    private javax.swing.JLabel lbl_name;
     private javax.swing.JPanel navar;
+    private javax.swing.JPanel profile;
     private javax.swing.JTable user_table;
     // End of variables declaration//GEN-END:variables
 }
