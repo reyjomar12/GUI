@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -125,6 +126,36 @@ public ResultSet getData(String sql, Object... values) {
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
         return null;
+    }
+}
+public void deleteData(String sql) {
+    try {
+        Connection conn = connectDB(); // Use your existing connection method
+        PreparedStatement pst = conn.prepareStatement(sql);
+        int rowsDeleted = pst.executeUpdate();
+        if (rowsDeleted > 0) {
+            JOptionPane.showMessageDialog(null, "User Deleted Successfully!");
+        }
+        pst.close();
+        conn.close();
+    } catch (SQLException ex) {
+        System.out.println("Delete Error: " + ex.getMessage());
+    }
+}
+public void insertData(String sql){
+    try{
+        // 1. Establish the connection link
+        Connection conn = connectDB(); 
+        
+        // 2. Use the active 'conn' for the statement
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.executeUpdate();
+        
+        System.out.println("Inserted Successfully");
+        pst.close();
+        conn.close(); // 3. Always close to save changes to SQLite
+    } catch(SQLException ex){
+        System.out.println("Connection Error: " + ex);
     }
 }
 }
