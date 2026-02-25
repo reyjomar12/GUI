@@ -158,4 +158,23 @@ public void insertData(String sql){
         System.out.println("Connection Error: " + ex);
     }
 }
+public void updateData(String sql){
+    try {
+        // 1. Establish the connection link
+        Connection conn = connectDB(); 
+        
+        // 2. Use the active 'conn' to prepare the statement
+        PreparedStatement pst = conn.prepareStatement(sql);
+        int rowsUpdated = pst.executeUpdate();
+        
+        if(rowsUpdated > 0){
+            System.out.println("Update Successful");
+        }
+        
+        pst.close();
+        conn.close(); // 3. Close the connection to save changes
+    } catch(SQLException ex){
+        System.out.println("Update Error: " + ex.getMessage());
+    }
+}
 }
