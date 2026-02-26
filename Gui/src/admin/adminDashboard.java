@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package admin;
+import static com.sun.jndi.toolkit.dir.DirSearch.search;
 import config.Session;
 import config.config;
 import java.awt.Color;
@@ -22,18 +23,31 @@ public class adminDashboard extends javax.swing.JFrame {
     /**
      * Creates new form adminDashboard
      */
+    String status = "Accounts";
+    
     public adminDashboard() {
         initComponents();
         profile.setVisible(false); 
         users.setVisible(false);
         
+        
+        
     }
     public void displayData() {
         try {
         config cn = new config();
-        ResultSet rs = cn.getData("SELECT a_id, name, email, type, status FROM tbl_accounts");
+        String query;
+        
+        if(status.equals("Accounts")) {
+            query = "SELECT a_id, name, email, type, status FROM tbl_accounts";
+        } else {
+            // This targets your water items masterlist
+            query = "SELECT p_id, p_name, p_price, p_stock, p_status FROM tbl_products";
+        }
+        
+        ResultSet rs = cn.getData(query);
         user_table.setModel(DbUtils.resultSetToTableModel(rs));
-    } catch (Exception e) { // Changed from SQLException to Exception
+    } catch (Exception e) {
         System.out.println("Database Error: " + e.getMessage());
     }
 
@@ -60,7 +74,7 @@ public class adminDashboard extends javax.swing.JFrame {
         ADD = new javax.swing.JButton();
         EDIT = new javax.swing.JButton();
         DELETE = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        tx_search = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         profile = new javax.swing.JPanel();
@@ -79,6 +93,8 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         Account = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        Product = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -129,6 +145,12 @@ public class adminDashboard extends javax.swing.JFrame {
             }
         });
 
+        tx_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tx_searchKeyReleased(evt);
+            }
+        });
+
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("SEARCH");
@@ -162,7 +184,7 @@ public class adminDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(DELETE, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(128, 128, 128)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tx_search, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
@@ -179,7 +201,7 @@ public class adminDashboard extends javax.swing.JFrame {
                         .addComponent(ADD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(EDIT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(DELETE, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tx_search, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(411, Short.MAX_VALUE))
             .addGroup(usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, usersLayout.createSequentialGroup()
@@ -343,6 +365,39 @@ public class adminDashboard extends javax.swing.JFrame {
 
         navar.add(Account, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 110, 40));
 
+        Product.setBackground(new java.awt.Color(51, 0, 51));
+        Product.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProductMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ProductMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ProductMouseExited(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("PRODUCT");
+
+        javax.swing.GroupLayout ProductLayout = new javax.swing.GroupLayout(Product);
+        Product.setLayout(ProductLayout);
+        ProductLayout.setHorizontalGroup(
+            ProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+        );
+        ProductLayout.setVerticalGroup(
+            ProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ProductLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        navar.add(Product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 110, 40));
+
         jPanel1.add(navar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 130, 320));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -396,19 +451,23 @@ public class adminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_UsersMouseExited
 
     private void UsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseClicked
-       displayData(); 
-       users.setVisible(true);
-       profile.setVisible(false); 
+       status = "Accounts"; // Set mode to Accounts
+    users.setVisible(true); // Show the panel containing the table
+    profile.setVisible(false); 
+    displayData();
+       
     }//GEN-LAST:event_UsersMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
         users.setVisible(false);
         profile.setVisible(false); 
+        
     }//GEN-LAST:event_HomeMouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         users.setVisible(false); 
-    profile.setVisible(true);       
+    profile.setVisible(true);  
+    
     
     // Fetch data from Session
     Session ses = Session.getInstance();
@@ -431,7 +490,8 @@ public class adminDashboard extends javax.swing.JFrame {
 
     private void AccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountMouseClicked
         users.setVisible(false); 
-    profile.setVisible(true);       
+    profile.setVisible(true);  
+    
     
     // Fetch data from Session
     Session ses = Session.getInstance();
@@ -441,31 +501,53 @@ public class adminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_AccountMouseClicked
 
     private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
-     UserAdminForm uaf = new UserAdminForm();
-    uaf.setVisible(true);
-    uaf.setVisible(true); // Redundant, but ensures it shows
+     if(status.equals("Accounts")) {
+        // If viewing Users, open the User Form
+        UserAdminForm uaf = new UserAdminForm();
+        uaf.setVisible(true);
+    } else {
+        // If viewing Products, open your new Product Form
+        ProductForm pf = new ProductForm();
+        pf.setVisible(true);
+    }
     this.dispose();
     }//GEN-LAST:event_ADDActionPerformed
 
     private void EDITActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EDITActionPerformed
         int row = user_table.getSelectedRow();
+    
     if(row != -1) {
         TableModel model = user_table.getModel();
-        UserAdminForm uaf = new UserAdminForm();
         
-        // Passing data to the fields
-        uaf.tx_id.setText(model.getValueAt(row, 0).toString());
-        uaf.tx_name.setText(model.getValueAt(row, 1).toString());
-        uaf.tx_email.setText(model.getValueAt(row, 2).toString());
-        uaf.tx_password.setText(model.getValueAt(row, 2).toString());
-        
-        // Line 463: Direct access now works because the button is public
-        uaf.SAVE.setText("UPDATE"); 
-        
-        uaf.setVisible(true);
+        if(status.equals("Accounts")) {
+            // Logic for Editing Users
+            UserAdminForm uaf = new UserAdminForm();
+            uaf.setFormData(
+                model.getValueAt(row, 0).toString(), 
+                model.getValueAt(row, 1).toString(), 
+                model.getValueAt(row, 2).toString(), 
+                model.getValueAt(row, 3).toString(), 
+                model.getValueAt(row, 4).toString()
+            );
+            uaf.SAVE.setText("UPDATE"); 
+            uaf.setVisible(true);
+        } else {
+            // Logic for Editing Products
+            ProductForm pf = new ProductForm();
+            // We pass the product data to the ProductForm
+            pf.setProductData(
+                model.getValueAt(row, 0).toString(), // p_id
+                model.getValueAt(row, 1).toString(), // p_name
+                model.getValueAt(row, 2).toString(), // p_price
+                model.getValueAt(row, 3).toString(), // p_stock
+                model.getValueAt(row, 4).toString()  // p_status
+            );
+            pf.SAVE.setText("UPDATE");
+            pf.setVisible(true);
+        }
         this.dispose();
     } else {
-        JOptionPane.showMessageDialog(null, "Please select a user!");
+        JOptionPane.showMessageDialog(null, "Please select an item from the table!");
     }
     }//GEN-LAST:event_EDITActionPerformed
 
@@ -476,13 +558,19 @@ public class adminDashboard extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Please select an item to delete!");
     } else {
         TableModel model = user_table.getModel();
-        Object id = model.getValueAt(rowIndex, 0); // Gets the a_id from the first column
+        Object id = model.getValueAt(rowIndex, 0); 
         
         int a = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete ID: " + id + "?");
         if (a == JOptionPane.YES_OPTION) {
             config cn = new config();
-            // Delete query using the ID from the table
-            cn.deleteData("DELETE FROM tbl_accounts WHERE a_id = '" + id + "'");
+            
+            if(status.equals("Accounts")) {
+                // Delete from User table
+                cn.deleteData("DELETE FROM tbl_accounts WHERE a_id = '" + id + "'");
+            } else {
+                // Delete from Product table
+                cn.deleteData("DELETE FROM tbl_products WHERE p_id = '" + id + "'");
+            }
             
             // Refresh the table to show it's gone
             displayData(); 
@@ -493,6 +581,47 @@ public class adminDashboard extends javax.swing.JFrame {
     private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_user_tableMouseClicked
+
+    private void tx_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tx_searchKeyReleased
+        config cn = new config(); 
+    try {
+        String searchText = tx_search.getText();
+        String query;
+
+        // Check if we are searching for Users or Products
+        if(status.equals("Accounts")) {
+            query = "SELECT a_id, name, email, type, status FROM tbl_accounts "
+                  + "WHERE a_id LIKE '%" + searchText + "%' "
+                  + "OR name LIKE '%" + searchText + "%'";
+        } else {
+            // Searching for Water Refill items (Masterlist)
+            query = "SELECT p_id, p_name, p_price, p_stock, p_status FROM tbl_products "
+                  + "WHERE p_id LIKE '%" + searchText + "%' "
+                  + "OR p_name LIKE '%" + searchText + "%'";
+        }
+        
+        ResultSet rs = cn.getData(query);
+        user_table.setModel(DbUtils.resultSetToTableModel(rs));
+        
+    } catch (Exception ex) {
+        System.out.println("Search Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_tx_searchKeyReleased
+
+    private void ProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductMouseClicked
+        status = "Products"; // Set mode to Products
+    users.setVisible(true); // We keep the 'users' panel visible because the table is inside it!
+    profile.setVisible(false);
+    displayData();
+    }//GEN-LAST:event_ProductMouseClicked
+
+    private void ProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductMouseExited
+        Product.setBackground(navcolor);
+    }//GEN-LAST:event_ProductMouseExited
+
+    private void ProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductMouseEntered
+        Product.setBackground(bodycolor);
+    }//GEN-LAST:event_ProductMouseEntered
 
     /**
      * @param args the command line arguments
@@ -535,10 +664,12 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton DELETE;
     private javax.swing.JButton EDIT;
     private javax.swing.JPanel Home;
+    private javax.swing.JPanel Product;
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -551,12 +682,12 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_email;
     private javax.swing.JLabel lbl_id;
     private javax.swing.JLabel lbl_name;
     private javax.swing.JPanel navar;
     private javax.swing.JPanel profile;
+    private javax.swing.JTextField tx_search;
     private javax.swing.JTable user_table;
     private javax.swing.JPanel users;
     // End of variables declaration//GEN-END:variables

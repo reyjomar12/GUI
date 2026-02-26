@@ -39,6 +39,7 @@ public class userAccount extends javax.swing.JInternalFrame {
         name_display = new javax.swing.JLabel();
         email_display = new javax.swing.JLabel();
 
+        setRequestFocusEnabled(false);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package admin;
+import internalPages.transactionPage;
 import internalPages.userAccount;
 import java.awt.Color;
 
@@ -18,6 +19,7 @@ public class usersForm extends javax.swing.JFrame {
      */
     public usersForm() {
         initComponents();
+        
     }
     
     Color navcolor= new Color(0,51,255);
@@ -39,6 +41,8 @@ public class usersForm extends javax.swing.JFrame {
         navar = new javax.swing.JPanel();
         home = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        transaction = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         maindesk = new javax.swing.JDesktopPane();
@@ -109,6 +113,42 @@ public class usersForm extends javax.swing.JFrame {
 
         navar.add(home, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 140, -1));
 
+        transaction.setBackground(new java.awt.Color(0, 51, 255));
+        transaction.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transactionMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                transactionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                transactionMouseExited(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("TRANSACTION");
+
+        javax.swing.GroupLayout transactionLayout = new javax.swing.GroupLayout(transaction);
+        transaction.setLayout(transactionLayout);
+        transactionLayout.setHorizontalGroup(
+            transactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(transactionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        transactionLayout.setVerticalGroup(
+            transactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(transactionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        navar.add(transaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 140, -1));
+
         account.setBackground(new java.awt.Color(0, 51, 255));
         account.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -132,7 +172,7 @@ public class usersForm extends javax.swing.JFrame {
             accountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
         accountLayout.setVerticalGroup(
@@ -143,12 +183,12 @@ public class usersForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        navar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 327, -1, -1));
+        navar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, -1));
 
         jPanel1.add(navar);
         navar.setBounds(0, 60, 160, 390);
 
-        maindesk.setBackground(new java.awt.Color(0, 255, 255));
+        maindesk.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout maindeskLayout = new javax.swing.GroupLayout(maindesk);
         maindesk.setLayout(maindeskLayout);
@@ -200,6 +240,20 @@ public class usersForm extends javax.swing.JFrame {
         maindesk.add(user).setVisible(true);
     }//GEN-LAST:event_accountMouseClicked
 
+    private void transactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionMouseClicked
+        transactionPage tp = new transactionPage();
+       maindesk.add(tp); // 'main_desktop' is your JDesktopPane name
+       tp.setVisible(true);
+    }//GEN-LAST:event_transactionMouseClicked
+
+    private void transactionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionMouseEntered
+        transaction.setBackground(bodycolor);
+    }//GEN-LAST:event_transactionMouseEntered
+
+    private void transactionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionMouseExited
+         transaction.setBackground(navcolor);
+    }//GEN-LAST:event_transactionMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -241,9 +295,11 @@ public class usersForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JDesktopPane maindesk;
     private javax.swing.JPanel navar;
+    private javax.swing.JPanel transaction;
     // End of variables declaration//GEN-END:variables
 }

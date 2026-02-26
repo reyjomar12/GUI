@@ -10,7 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -134,7 +137,7 @@ public void deleteData(String sql) {
         PreparedStatement pst = conn.prepareStatement(sql);
         int rowsDeleted = pst.executeUpdate();
         if (rowsDeleted > 0) {
-            JOptionPane.showMessageDialog(null, "User Deleted Successfully!");
+            JOptionPane.showMessageDialog(null, "Deleted Successfully!");
         }
         pst.close();
         conn.close();
@@ -176,5 +179,34 @@ public void updateData(String sql){
     } catch(SQLException ex){
         System.out.println("Update Error: " + ex.getMessage());
     }
+}
+public void fillTable(String query, JTable table) {
+    try {
+        // Change getConnection() to connectDB() to match your existing method
+        Connection cn = connectDB(); 
+        Statement st = cn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        table.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+        st.close();
+        cn.close();
+    } catch (SQLException e) {
+        System.out.println("Error filling table: " + e.getMessage());
+    }
+}
+public int getLatestID(String query) {
+    int id = 0;
+    try {
+        Connection conn = connectDB(); // Use your existing connection method
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        conn.close();
+    } catch (SQLException e) {
+        System.out.println("Error fetching latest ID: " + e.getMessage());
+    }
+    return id;
 }
 }
