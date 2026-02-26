@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 package admin;
+import gui.Dashboard;
+import internalPages.historyPage;
 import internalPages.transactionPage;
 import internalPages.userAccount;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,8 +46,11 @@ public class usersForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         transaction = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        history = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
         account = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        LOGOUT = new javax.swing.JButton();
         maindesk = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -149,6 +155,42 @@ public class usersForm extends javax.swing.JFrame {
 
         navar.add(transaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 140, -1));
 
+        history.setBackground(new java.awt.Color(0, 51, 255));
+        history.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historyMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                historyMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                historyMouseExited(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("HISTORY");
+
+        javax.swing.GroupLayout historyLayout = new javax.swing.GroupLayout(history);
+        history.setLayout(historyLayout);
+        historyLayout.setHorizontalGroup(
+            historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(historyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        historyLayout.setVerticalGroup(
+            historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(historyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        navar.add(history, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 140, -1));
+
         account.setBackground(new java.awt.Color(0, 51, 255));
         account.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -184,6 +226,15 @@ public class usersForm extends javax.swing.JFrame {
         );
 
         navar.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, -1));
+
+        LOGOUT.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LOGOUT.setText("LOGOUT");
+        LOGOUT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOGOUTActionPerformed(evt);
+            }
+        });
+        navar.add(LOGOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
         jPanel1.add(navar);
         navar.setBounds(0, 60, 160, 390);
@@ -254,6 +305,33 @@ public class usersForm extends javax.swing.JFrame {
          transaction.setBackground(navcolor);
     }//GEN-LAST:event_transactionMouseExited
 
+    private void historyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyMouseClicked
+        historyPage hp = new historyPage();
+    maindesk.add(hp); // Using your fixed desktop pane name
+    hp.setVisible(true);
+
+    }//GEN-LAST:event_historyMouseClicked
+
+    private void historyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyMouseEntered
+        history.setBackground(bodycolor);
+    }//GEN-LAST:event_historyMouseEntered
+
+    private void historyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyMouseExited
+        history.setBackground(navcolor);
+    }//GEN-LAST:event_historyMouseExited
+
+    private void LOGOUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOGOUTActionPerformed
+       int a = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Select", JOptionPane.YES_NO_OPTION);
+    if(a == 0) {
+        // Return to the Login Screen
+        Dashboard dashb = new Dashboard();
+        dashb.setVisible(true);
+        
+        // Close the current User Dashboard
+        this.dispose();
+    }
+    }//GEN-LAST:event_LOGOUTActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -290,12 +368,15 @@ public class usersForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LOGOUT;
     private javax.swing.JPanel account;
+    private javax.swing.JPanel history;
     private javax.swing.JPanel home;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JDesktopPane maindesk;

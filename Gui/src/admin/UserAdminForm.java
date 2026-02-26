@@ -222,25 +222,41 @@ public class UserAdminForm extends javax.swing.JFrame {
 
     private void SAVEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SAVEActionPerformed
     config cn = new config();
-    String userType = cb_type.getSelectedItem().toString(); 
-    String userStatus = cb_status.getSelectedItem().toString(); 
+    String name = tx_name.getText().trim();
+    String email = tx_email.getText().trim();
+    String id = tx_id.getText().trim();
 
-    if(SAVE.getText().equals("SAVE")) {
-        cn.insertData("INSERT INTO tbl_accounts (name, email, password, type, status) "
-            + "VALUES ('" + tx_name.getText() + "', '" + tx_email.getText() + "', "
-            + "'" + tx_password.getText() + "', '" + userType + "', '" + userStatus + "')");
-        javax.swing.JOptionPane.showMessageDialog(null, "Saved Successfully!");
+    if (SAVE.getText().equals("SAVE")) {
+        // Use validationCheck - it closes the connection automatically!
+        String query = "SELECT * FROM tbl_accounts WHERE name = ? OR email = ?";
+        if (cn.validationCheck(query, name, email)) {
+            JOptionPane.showMessageDialog(null, "Name or Email already exists!");
+        } else {
+            // Now the database is UNLOCKED and ready for the insert
+            cn.insertData("INSERT INTO tbl_accounts (name, email, password, type, status) "
+                + "VALUES ('" + name + "', '" + email + "', '" + tx_password.getText() + "', '" 
+                + cb_type.getSelectedItem() + "', '" + cb_status.getSelectedItem() + "')");
+            successExit();
+        }
     } else {
-        cn.updateData("UPDATE tbl_accounts SET name = '" + tx_name.getText() + "', "
-            + "email = '" + tx_email.getText() + "', type = '" + userType + "', "
-            + "status = '" + userStatus + "' "
-            + "WHERE a_id = '" + tx_id.getText() + "'");
-        
-        javax.swing.JOptionPane.showMessageDialog(null, "Account Updated Successfully!");
+        // Validation for UPDATE: check if name/email belongs to ANOTHER user
+        String query = "SELECT * FROM tbl_accounts WHERE (name = ? OR email = ?) AND a_id != ?";
+        if (cn.validationCheck(query, name, email, id)) {
+            JOptionPane.showMessageDialog(null, "This Name or Email is already taken!");
+        } else {
+            cn.updateData("UPDATE tbl_accounts SET name = '" + name + "', email = '" + email + "', "
+                + "type = '" + cb_type.getSelectedItem() + "', status = '" + cb_status.getSelectedItem() + "' "
+                + "WHERE a_id = '" + id + "'");
+            successExit();
+        }
     }
+}
 
+private void successExit(){
+    JOptionPane.showMessageDialog(null, "Operation Successful!");
     new admin.adminDashboard().setVisible(true);
     this.dispose();
+
     }//GEN-LAST:event_SAVEActionPerformed
 
     /**

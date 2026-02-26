@@ -7,6 +7,7 @@ package admin;
 import static com.sun.jndi.toolkit.dir.DirSearch.search;
 import config.Session;
 import config.config;
+import gui.Dashboard;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -82,10 +83,11 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lbl_id = new javax.swing.JLabel();
-        lbl_name = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        lbl_email = new javax.swing.JLabel();
+        admin_email = new javax.swing.JTextField();
+        admin_name = new javax.swing.JTextField();
+        btn_update = new javax.swing.JButton();
         navar = new javax.swing.JPanel();
         Home = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -95,6 +97,7 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         Product = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
+        LOGOUT = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -241,14 +244,34 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel7.setText("ADMIN ID:");
         profile.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 80, 30));
         profile.add(lbl_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 140, 30));
-        profile.add(lbl_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 140, 30));
 
         jLabel10.setText("ADMIN NAME:");
         profile.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 80, 30));
 
         jLabel11.setText("ADMIN EMAIL:");
         profile.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 80, 30));
-        profile.add(lbl_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 140, 30));
+
+        admin_email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                admin_emailActionPerformed(evt);
+            }
+        });
+        profile.add(admin_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 130, 30));
+
+        admin_name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                admin_nameActionPerformed(evt);
+            }
+        });
+        profile.add(admin_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 92, 130, 30));
+
+        btn_update.setText("UPDATE");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+        profile.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
 
         jPanel1.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 710, 450));
 
@@ -260,11 +283,11 @@ public class adminDashboard extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HomeMouseClicked(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                HomeMouseExited(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 HomeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                HomeMouseExited(evt);
             }
         });
 
@@ -398,6 +421,14 @@ public class adminDashboard extends javax.swing.JFrame {
 
         navar.add(Product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 110, 40));
 
+        LOGOUT.setText("LOGOUT");
+        LOGOUT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOGOUTActionPerformed(evt);
+            }
+        });
+        navar.add(LOGOUT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+
         jPanel1.add(navar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 130, 320));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -471,8 +502,8 @@ public class adminDashboard extends javax.swing.JFrame {
     
     // Fetch data from Session
     Session ses = Session.getInstance();
-    lbl_name.setText(ses.getName());
-    lbl_email.setText(ses.getEmail());
+    admin_name.setText(ses.getName());
+    admin_email.setText(ses.getEmail());
     lbl_id.setText(" " + ses.getId());
     }//GEN-LAST:event_jLabel3MouseClicked
 
@@ -495,8 +526,8 @@ public class adminDashboard extends javax.swing.JFrame {
     
     // Fetch data from Session
     Session ses = Session.getInstance();
-    lbl_name.setText(ses.getName());
-    lbl_email.setText(ses.getEmail());
+    admin_name.setText(ses.getName());
+    admin_email.setText(ses.getEmail());
     lbl_id.setText(" " + ses.getId());
     }//GEN-LAST:event_AccountMouseClicked
 
@@ -623,6 +654,70 @@ public class adminDashboard extends javax.swing.JFrame {
         Product.setBackground(bodycolor);
     }//GEN-LAST:event_ProductMouseEntered
 
+    private void admin_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_admin_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_admin_emailActionPerformed
+
+    private void admin_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_admin_nameActionPerformed
+        config cn = new config();
+    Session sess = Session.getInstance();
+    
+    // 1. Get the data from the new text fields
+    String newName = admin_name.getText();
+    String newEmail = admin_email.getText();
+
+    // 2. Build the Update Query using the correct DB column names
+    // Note: We use 'name' and 'email' as found in your tbl_accounts structure
+    String sql = "UPDATE tbl_accounts SET name = '" + newName + "', "
+               + "email = '" + newEmail + "' "
+               + "WHERE a_id = " + sess.getId(); 
+
+    // 3. Execute the update using your config method
+    cn.updateData(sql);
+    
+    // 4. Update the Session instance so the change is global
+    sess.setName(newName);
+    sess.setEmail(newEmail);
+    
+    JOptionPane.showMessageDialog(null, "Admin Profile Updated Successfully!");
+
+    }//GEN-LAST:event_admin_nameActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        config cn = new config();
+    Session sess = Session.getInstance();
+    
+    // Use the variable names of your TextFields
+    String newName = admin_name.getText(); 
+    String newEmail = admin_email.getText();
+
+    // Ensure 'name', 'email', and 'a_id' match your DB exactly
+    String sql = "UPDATE tbl_accounts SET name = '" + newName + "', "
+               + "email = '" + newEmail + "' "
+               + "WHERE a_id = " + sess.getId(); 
+
+    cn.updateData(sql); // This method handles the connection close
+    
+    // Sync the session
+    sess.setName(newName);
+    sess.setEmail(newEmail);
+    
+    JOptionPane.showMessageDialog(null, "Update Successful!");
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void LOGOUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOGOUTActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Logout", JOptionPane.YES_NO_OPTION);
+
+if (confirm == JOptionPane.YES_OPTION) {
+    // 1. Open the Login Form
+    Dashboard lf = new Dashboard(); 
+    lf.setVisible(true);
+    
+    // 2. Close the current Dashboard
+    this.dispose();
+}
+    }//GEN-LAST:event_LOGOUTActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -664,8 +759,12 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton DELETE;
     private javax.swing.JButton EDIT;
     private javax.swing.JPanel Home;
+    private javax.swing.JButton LOGOUT;
     private javax.swing.JPanel Product;
     private javax.swing.JPanel Users;
+    private javax.swing.JTextField admin_email;
+    private javax.swing.JTextField admin_name;
+    private javax.swing.JButton btn_update;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -682,9 +781,7 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbl_email;
     private javax.swing.JLabel lbl_id;
-    private javax.swing.JLabel lbl_name;
     private javax.swing.JPanel navar;
     private javax.swing.JPanel profile;
     private javax.swing.JTextField tx_search;

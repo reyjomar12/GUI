@@ -240,7 +240,7 @@
                   <Font name="Century Gothic" size="18" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="WELCOME!"/>
+                <Property name="text" type="java.lang.String" value="WELCOME! to Water Refilling Order Mangement"/>
               </Properties>
             </Component>
           </SubComponents>

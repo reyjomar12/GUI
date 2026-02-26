@@ -209,4 +209,20 @@ public int getLatestID(String query) {
     }
     return id;
 }
+public boolean validationCheck(String query, Object... values) {
+    try (Connection conn = connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+        
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+        
+        try (ResultSet rs = pstmt.executeQuery()) {
+            return rs.next(); // Returns true if a record is found (duplicate exists)
+        }
+    } catch (SQLException e) {
+        System.out.println("Validation Error: " + e.getMessage());
+        return false;
+    }
+}
 }

@@ -78,7 +78,7 @@ public class transactionPage extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 430, 316));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 430, 320));
 
         lbl_total.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

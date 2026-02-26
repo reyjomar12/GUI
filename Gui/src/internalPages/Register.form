@@ -182,7 +182,7 @@
                   <Font name="Century Gothic" size="14" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Please Create an Account!"/>
+                <Property name="text" type="java.lang.String" value="Please CREATE an Account!"/>
               </Properties>
             </Component>
           </SubComponents>
