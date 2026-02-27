@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package admin;
+import config.Session;
 import gui.Dashboard;
 import internalPages.historyPage;
 import internalPages.transactionPage;
@@ -362,7 +363,21 @@ public class usersForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                Session sess = Session.getInstance();
+
+            // Check if user is logged in
+            if (sess.getId() == 0) {
+
+                JOptionPane.showMessageDialog(null, "Login required!");
+
+                // Open Login Form
+                Dashboard login = new Dashboard();
+                login.setVisible(true);
+
+            } else {
+                // User is logged in
                 new usersForm().setVisible(true);
+            }
             }
         });
     }
