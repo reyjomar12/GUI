@@ -5,6 +5,15 @@
 package internalPages;
 
 import config.config;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
+import java.io.FileOutputStream;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -59,6 +68,7 @@ public class historyPage extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         history_table = new javax.swing.JTable();
         lbl_grand_total = new javax.swing.JLabel();
+        RECEIPT = new javax.swing.JButton();
 
         history_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,6 +85,9 @@ public class historyPage extends javax.swing.JInternalFrame {
 
         lbl_grand_total.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
+        RECEIPT.setText("MAKE A RECEIPT");
+        RECEIPT.addActionListener(this::RECEIPTActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -82,14 +95,18 @@ public class historyPage extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lbl_grand_total, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_grand_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RECEIPT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(23, 23, 23)
+                .addComponent(RECEIPT)
+                .addGap(51, 51, 51)
                 .addComponent(lbl_grand_total, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -108,8 +125,101 @@ public class historyPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void RECEIPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RECEIPTActionPerformed
+        int row = history_table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a transaction first.");
+            return;
+        }
+
+        try {
+            // Retrieve Data from Table
+            String transID = history_table.getValueAt(row, 0).toString();
+            Object custObj = history_table.getValueAt(row, 1);
+            String customerName = (custObj == null || custObj.toString().isEmpty()) ? "Walk-in" : custObj.toString();
+            String pName = history_table.getValueAt(row, 2).toString();
+            String qty = history_table.getValueAt(row, 3).toString();
+            String subtotal = history_table.getValueAt(row, 4).toString();
+            String date = history_table.getValueAt(row, 5).toString();
+
+            // Show Digital Receipt Popup
+            String receiptHTML = "<html><div style='width: 250px;'><pre style='font-family: monospaced; font-size: 13px;'>"
+                + "      WATER REFILLING STATION\n"
+                + "      Minglanilla, Cebu Branch\n"
+                + "======================================\n"
+                + "Trans #:  " + transID + "\n"
+                + "Customer: " + customerName + "\n"
+                + "Date:     " + date + "\n"
+                + "--------------------------------------\n"
+                + "Item:     " + pName + "\n"
+                + "Qty:      " + qty + "\n"
+                + "--------------------------------------\n"
+                + "SUBTOTAL: P" + String.format("%.2f", Double.parseDouble(subtotal)) + "\n"
+                + "======================================\n"
+                + "       THANK YOU! for Purchasing!!\n"
+                + "</pre></div></html>";
+
+            JOptionPane.showMessageDialog(this, new javax.swing.JLabel(receiptHTML), "Digital Receipt", JOptionPane.PLAIN_MESSAGE);
+
+            // Ask to save as PDF
+            int confirm = JOptionPane.showConfirmDialog(this, "Do you want to save this receipt as a PDF?", "Save PDF", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                generatePDF(transID, customerName, date, pName, qty, subtotal);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+
+    // NEW METHOD: Generate PDF using iText
+    private void generatePDF(String tid, String cust, String date, String item, String qty, String total) {
+        String path = "";
+        JFileChooser j = new JFileChooser();
+        j.setSelectedFile(new java.io.File("Receipt_Trans_" + tid + ".pdf"));
+        
+        int x = j.showSaveDialog(this);
+        if (x == JFileChooser.APPROVE_OPTION) {
+            path = j.getSelectedFile().getPath();
+        } else {
+            return; 
+        }
+
+        Document doc = new Document();
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path));
+            doc.open();
+            
+            // Set Font to Courier to maintain the receipt look
+            Font mono = new Font(Font.FontFamily.COURIER, 12, Font.NORMAL);
+            
+            String content = "      WATER REFILLING STATION\n"
+                           + "      Minglanilla, Cebu Branch\n"
+                           + "======================================\n"
+                           + "Trans #:  " + tid + "\n"
+                           + "Customer: " + cust + "\n"
+                           + "Date:     " + date + "\n"
+                           + "--------------------------------------\n"
+                           + "Item:     " + item + "\n"
+                           + "Qty:      " + qty + "\n"
+                           + "--------------------------------------\n"
+                           + "SUBTOTAL: P" + String.format("%.2f", Double.parseDouble(total)) + "\n"
+                           + "======================================\n"
+                           + "       THANK YOU! for Purchasing!!\n";
+
+            doc.add(new Paragraph(content, mono));
+            JOptionPane.showMessageDialog(this, "PDF Receipt Saved Successfully!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "PDF Error: " + e.getMessage());
+        } finally {
+            doc.close();
+        }
+    }//GEN-LAST:event_RECEIPTActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton RECEIPT;
     private javax.swing.JTable history_table;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
